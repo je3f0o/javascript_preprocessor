@@ -1,7 +1,7 @@
 {
     "name": "@jeefo/javascript_preprocessor",
-    "version": "0.0.2",
-    "homepage": "https://github.com/je3f0o/javascript_preprocessor",
+    "version": "0.0.3",
+    "homepage": "https://github.com/je3f0o/jeefo_javascript_preprocessor",
     "copyright": "2020",
     "description": "part of jeefo framework",
     "author": {
@@ -17,7 +17,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git@github.com:je3f0o/javascript_preprocessor.git"
+        "url": "git@github.com:je3f0o/jeefo_javascript_preprocessor.git"
     },
     "keywords": [
         "jeefo",
