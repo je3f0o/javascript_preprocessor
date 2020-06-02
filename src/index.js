@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
-* File Name   : js_pp.js
+* File Name   : index.js
 * Created at  : 2020-05-30
-* Updated at  : 2020-06-01
+* Updated at  : 2020-06-02
 * Author      : jeefo
 * Purpose     :
 * Description :
@@ -90,13 +90,16 @@ class JavascriptPreprocessor extends EventEmitter {
                 break;
             case "Keyword" :
             case "Terminal symbol":
+            case "Label identifier":
             case "Contextual keyword" :
                 if (node.pre_comment) { this.walk(node.pre_comment); }
                 break;
             case "If statement" :
             case "For statement" :
             case "While statement" :
+                this.walk(node.keyword);
                 this.walk(node.expression);
+                this.walk(node.statement);
                 break;
             case "Try statement":
                 this.walk(node.block);
@@ -329,13 +332,27 @@ class JavascriptPreprocessor extends EventEmitter {
             case "Template literal expression" :
                 this.walk(node.expression);
                 break;
+            case "Labelled statement":
+                this.walk(node.label_identifier);
+                this.walk(node.delimiter);
+                this.walk(node.statement);
+                break;
             case "Switch statement" :
                 this.walk(node.keyword);
                 this.walk(node.expression);
                 this.walk(node.case_block);
                 break;
+            case "Variable statement" :
+            case "Variable declaration list no in" :
+                this.walk(node.keyword);
+                node.declaration_list.forEach(n => this.walk(n));
+                node.delimiters.forEach(n => this.walk(n));
+                this.walk(node.terminator);
+                break;
             default:
-                throw new Error(`Unexpected node: '${ node.id }'`);
+                const error = new Error(`Unexpected node: '${ node.id }'`);
+                error.node = node;
+                throw error;
         }
     }
 
