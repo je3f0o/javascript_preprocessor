@@ -1,1 +1,1 @@
-@jeefo/javascript_preprocessor part of jeefo framework.
+ECMA script preprocessor. (under developing...)

@@ -1,9 +1,9 @@
 {
     "name": "@jeefo/javascript_preprocessor",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "homepage": "https://github.com/je3f0o/jeefo_javascript_preprocessor",
     "copyright": "2020",
-    "description": "part of jeefo framework",
+    "description": "ECMA script preprocessor. (under developing...)",
     "author": {
         "name": "je3f0o",
         "email": "je3f0o@gmail.com"
@@ -27,6 +27,8 @@
     ],
     "dependencies": {},
     "devDependencies": {
+        "@jeefo/ecma_parser": "0.0.9",
+        "@jeefo/parser": "0.0.26",
         "@jeefo/publish": "0.0.31"
     }
 }
