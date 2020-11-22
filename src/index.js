@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name   : index.js
 * Created at  : 2020-05-30
-* Updated at  : 2020-10-07
+* Updated at  : 2020-11-22
 * Author      : jeefo
 * Purpose     :
 * Description :
@@ -61,7 +61,6 @@ class JavascriptPreprocessor extends AsyncEventEmitter {
         switch (node.id) {
             // Identifiers
             case "Identifier" :
-            case "Identifier name" :
             case "Label identifier" :
             case "Binding identifier" :
             case "Identifier reference" :
@@ -75,18 +74,23 @@ class JavascriptPreprocessor extends AsyncEventEmitter {
             case "Regular expression literal" :
             case "Template literal string" :
 
-            // Keyword
-            case "Keyword" :
-            case "This keyword" :
-
             // Others
-            case "Comment" :
             case "Undefined" :
-            case "Punctuator" :
             case "New target" :
             case "Debugger statement" :
             case "Empty statement" :
             case "Empty parameter list" :
+                break;
+
+            case "Keyword" :
+            case "Punctuator" :
+            case "This keyword" :
+            case "Identifier name" :
+                if (node.pre_comment) await this.walk(node.pre_comment);
+                break;
+
+            case "Comment" :
+                if (node.previous_comment) await this.walk(node.previous_comment);
                 break;
 
             case "Binding pattern" :
@@ -219,7 +223,9 @@ class JavascriptPreprocessor extends AsyncEventEmitter {
             case "Async method body"         :
             case "Async function body"       :
             case "Async arrow function body" :
+                await this.walk(node.open_curly_bracket);
                 for (const n of node.statement_list) await this.walk(n);
+                await this.walk(node.close_curly_bracket);
                 break;
 
             case "Arguments" :
@@ -231,7 +237,9 @@ class JavascriptPreprocessor extends AsyncEventEmitter {
                 if (node.rest_parameter) await this.walk(node.rest_parameter);
                 break;
             case "Grouping expression" :
+                await this.walk(node.open_parenthesis);
                 for (const n of node.expressions_list) await this.walk(n);
+                await this.walk(node.close_parenthesis);
                 break;
 
             case "Class body" :
