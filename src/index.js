@@ -1,7 +1,7 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 * File Name   : index.js
 * Created at  : 2020-05-30
-* Updated at  : 2020-11-22
+* Updated at  : 2020-11-24
 * Author      : jeefo
 * Purpose     :
 * Description :
@@ -498,7 +498,7 @@ class JavascriptPreprocessor extends AsyncEventEmitter {
         this.module = module;
 
         const nodes = parser.parse(module.content);
-        for (const n of nodes) await await this.walk(n);
+        for (const n of nodes) await this.walk(n);
 
         module.replacements.sort(sort_by_start_index);
         let i = module.replacements.length;
